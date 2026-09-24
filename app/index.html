@@ -176,12 +176,16 @@ header{
   <div class="card">
     <div class="card-h">📦 订阅地址<span class="c" id="subCount"></span></div>
     <div class="subrow">
-      <div class="t"><b>Clash / Clash Meta</b><span id="u1">—</span></div>
+      <div class="t"><b>Clash / Clash Meta（推荐）</b><span id="u1">—</span></div>
       <button class="mini" data-sub="0">复制</button>
     </div>
     <div class="subrow">
-      <div class="t"><b>v2rayNG / NekoBox / sing-box</b><span id="u2">—</span></div>
+      <div class="t"><b>v2rayNG（已剔除 hysteria）</b><span id="u2">—</span></div>
       <button class="mini" data-sub="1">复制</button>
+    </div>
+    <div class="subrow">
+      <div class="t"><b>NekoBox / sing-box / SagerNet</b><span id="u2b">—</span></div>
+      <button class="mini" data-sub="2">复制</button>
     </div>
     <div class="subrow" style="border:none">
       <div class="t"><b>换备用线路</b><span id="u3">国内打不开就换一个</span></div>
@@ -376,9 +380,11 @@ function renderList(){
   });
 }
 function subUrl(file){ return MIRRORS[mirror].base + file; }
+var SUB_FILES = ["clash.yaml", "v2rayng.txt", "sub.txt"];
 function renderSubs(){
-  $("#u1").textContent = subUrl("clash.yaml");
-  $("#u2").textContent = subUrl("sub.txt");
+  $("#u1").textContent = subUrl(SUB_FILES[0]);
+  $("#u2").textContent = subUrl(SUB_FILES[1]);
+  $("#u2b").textContent = subUrl(SUB_FILES[2]);
   $("#u3").textContent = "当前：" + MIRRORS[mirror].name;
   $("#subCount").textContent = (data && data.count) ? data.count + " 个节点" : "";
 }
@@ -412,12 +418,12 @@ Array.prototype.forEach.call(document.querySelectorAll(".opt"), function(o){
     var k = o.dataset.app;
     closeSheet();
     if(!cur){ toast("先选一个节点"); return; }
-    if(k==="copy"){ copy(subUrl("sub.txt")); return; }
+    if(k==="copy"){ copy(subUrl(SUB_FILES[1])); return; }
     if(k==="one"){ if(cur.link) copy(cur.link); else toast("这个节点没有可复制的链接"); return; }
-    var url = (k==="clash") ? subUrl("clash.yaml") : subUrl("sub.txt");
-    if(k==="clash") launch("clash://install-config?url=", url, "Clash");
-    else if(k==="v2rayng") launch("v2rayng://install-config?url=", url, "v2rayNG");
-    else launch("sing-box://import-remote-profile?url=", url, "NekoBox / sing-box");
+    // 每个客户端给对应的订阅：v2rayNG 要剔除 hysteria 的那份，否则一片「不支持」
+    if(k==="clash") launch("clash://install-config?url=", subUrl(SUB_FILES[0]), "Clash");
+    else if(k==="v2rayng") launch("v2rayng://install-config?url=", subUrl(SUB_FILES[1]), "v2rayNG");
+    else launch("sing-box://import-remote-profile?url=", subUrl(SUB_FILES[2]), "NekoBox / sing-box");
   };
 });
 
@@ -431,7 +437,7 @@ $("#btnMirror").onclick = function(){
   toast("已切换到 " + MIRRORS[mirror].name + " 线路");
 };
 Array.prototype.forEach.call(document.querySelectorAll("[data-sub]"), function(b){
-  b.onclick = function(){ copy(subUrl(b.dataset.sub==="0" ? "clash.yaml" : "sub.txt")); };
+  b.onclick = function(){ copy(subUrl(SUB_FILES[parseInt(b.dataset.sub, 10)])); };
 });
 
 // ---- 启动 ----
