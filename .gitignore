@@ -1,0 +1,10 @@
+# 告知 .gitignore：图标、构建产物等
+sub/
+app/data/
+android/app/src/main/assets/
+android/.gradle/
+android/build/
+android/app/build/
+*.pyc
+__pycache__/
+android/app/debug.keystore
