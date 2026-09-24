@@ -1,0 +1,4 @@
+#!/bin/sh
+# 桩脚本，GitHub Actions 不会调用本机 gradlew（由 gradle/actions/setup-gradle 注入），
+# 但本机想试编译时也能用。
+exec gradle "$@"
