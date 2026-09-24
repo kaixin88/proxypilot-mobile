@@ -1,0 +1,127 @@
+# ProxyPilot Mobile —— 自动生成，请勿手工编辑
+# 由 GitHub Actions 定时从云端节点源聚合、去重、测速后生成
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: warning
+geodata-mode: true
+ipv6: false
+external-controller: 127.0.0.1:9090
+
+dns:
+  enable: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+  fallback:
+    - https://dns.google/dns-query
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 240.0.0.0/4
+
+proxies:
+  - name: proxy
+    type: vless
+    server: 62.210.70.194
+    port: 37783
+    uuid: a289c660-1b12-432b-a06c-c2ae469272b0
+    udp: true
+    tls: true
+    servername: www.yahoo.com
+    reality-opts:
+      public-key: tQeEamJmYVUUfjRLX7ETvMnPj4DrHzRhR5TI684oYgg
+      short-id: 21569dd6
+    client-fingerprint: chrome
+    network: xhttp
+    xhttp-opts:
+      path: /OCrp5Ajs
+      mode: auto
+  - name: "proxy #2"
+    type: vless
+    server: "2001:bc8:32d7:302::14"
+    port: 37783
+    uuid: a289c660-1b12-432b-a06c-c2ae469272b0
+    udp: true
+    tls: true
+    servername: www.yahoo.com
+    reality-opts:
+      public-key: tQeEamJmYVUUfjRLX7ETvMnPj4DrHzRhR5TI684oYgg
+      short-id: 21569dd6
+    client-fingerprint: chrome
+    network: xhttp
+    xhttp-opts:
+      path: /OCrp5Ajs
+      mode: auto
+  - name: Alvin9999-newpac
+    type: hysteria
+    server: 195.154.44.227
+    port: 55668
+    auth-str: github.com/Alvin9999-newpac/fanqiang
+    up: 20
+    down: 20
+    protocol: udp
+    sni: bing.com
+    skip-cert-verify: true
+  - name: github.com/Alvin9999-newpac/fanqiang
+    type: hysteria
+    server: 163.172.117.163
+    port: 36699
+    auth-str: dongtaiwang.com
+    up: 11 Mbps
+    down: 55 Mbps
+    protocol: udp
+    sni: bing.com
+    skip-cert-verify: true
+  - name: hysteria-ip2 hysteria
+    type: hysteria
+    server: 62.210.70.191
+    port: 23556
+    auth-str: github.com/Alvin9999-newpac/fanqiang
+    up: 11
+    down: 55
+    protocol: udp
+    skip-cert-verify: true
+  - name: hysteria-ip4 hysteria
+    type: hysteria
+    server: 5.83.129.90
+    port: 54177
+    auth-str: dongtaiwang.com
+    up: 11
+    down: 55
+    protocol: udp
+    skip-cert-verify: true
+proxy-groups:
+  - name: 🚀 自动选择
+    type: url-test
+    proxies:
+      - proxy
+      - "proxy #2"
+      - Alvin9999-newpac
+      - github.com/Alvin9999-newpac/fanqiang
+      - hysteria-ip2 hysteria
+      - hysteria-ip4 hysteria
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+  - name: 🎯 手动选择
+    type: select
+    proxies:
+      - 🚀 自动选择
+      - proxy
+      - "proxy #2"
+      - Alvin9999-newpac
+      - github.com/Alvin9999-newpac/fanqiang
+      - hysteria-ip2 hysteria
+      - hysteria-ip4 hysteria
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 🚀 自动选择
+      - 🎯 手动选择
+      - DIRECT
+
+rules:
+  - MATCH,🐟 漏网之鱼
