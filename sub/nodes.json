@@ -1,0 +1,74 @@
+{
+ "updated": "2026-09-24 08:31:39 UTC",
+ "count": 6,
+ "stat": {
+  "totalSources": 26,
+  "fetchedSources": 26,
+  "parsed": 26,
+  "merged": 14,
+  "removed": 2,
+  "alive": 12
+ },
+ "nodes": [
+  {
+   "id": "d19626838cd009b0",
+   "name": "proxy",
+   "protocol": "vless",
+   "server": "62.210.70.194",
+   "port": 37783,
+   "latency": 285,
+   "source": "xray-ip2",
+   "link": "vless://a289c660-1b12-432b-a06c-c2ae469272b0@62.210.70.194:37783?encryption=none&security=reality&type=xhttp&sni=www.yahoo.com&fp=chrome&pbk=tQeEamJmYVUUfjRLX7ETvMnPj4DrHzRhR5TI684oYgg&sid=21569dd6&path=%2FOCrp5Ajs&host=www.yahoo.com#proxy"
+  },
+  {
+   "id": "4ef91af876d419c7",
+   "name": "proxy",
+   "protocol": "vless",
+   "server": "2001:bc8:32d7:302::14",
+   "port": 37783,
+   "latency": 288,
+   "source": "xray-ip4",
+   "link": "vless://a289c660-1b12-432b-a06c-c2ae469272b0@2001:bc8:32d7:302::14:37783?encryption=none&security=reality&type=xhttp&sni=www.yahoo.com&fp=chrome&pbk=tQeEamJmYVUUfjRLX7ETvMnPj4DrHzRhR5TI684oYgg&sid=21569dd6&path=%2FOCrp5Ajs&host=www.yahoo.com#proxy"
+  },
+  {
+   "id": "043c682a8748193e",
+   "name": "Alvin9999-newpac",
+   "protocol": "hysteria",
+   "server": "195.154.44.227",
+   "port": 55668,
+   "latency": 0,
+   "source": "singbox-ip2",
+   "link": "hysteria://195.154.44.227:55668?peer=bing.com&auth=github.com%2FAlvin9999-newpac%2Ffanqiang&upmbps=20&downmbps=20&insecure=1&protocol=udp#Alvin9999-newpac"
+  },
+  {
+   "id": "448023ada610bffc",
+   "name": "github.com/Alvin9999-newpac/fanqiang",
+   "protocol": "hysteria",
+   "server": "163.172.117.163",
+   "port": 36699,
+   "latency": 0,
+   "source": "clash.meta-ip2",
+   "link": "hysteria://163.172.117.163:36699?peer=bing.com&auth=dongtaiwang.com&upmbps=11+&downmbps=55+&protocol=udp#github.com%2FAlvin9999-newpac%2Ffanqiang"
+  },
+  {
+   "id": "2e5487e5e0bff7ca",
+   "name": "hysteria-ip2 hysteria",
+   "protocol": "hysteria",
+   "server": "62.210.70.191",
+   "port": 23556,
+   "latency": 0,
+   "source": "hysteria-ip2",
+   "link": "hysteria://62.210.70.191:23556?auth=github.com%2FAlvin9999-newpac%2Ffanqiang&upmbps=11&downmbps=55&protocol=udp#hysteria-ip2%20hysteria"
+  },
+  {
+   "id": "74ea9ea980cdab65",
+   "name": "hysteria-ip4 hysteria",
+   "protocol": "hysteria",
+   "server": "5.83.129.90",
+   "port": 54177,
+   "latency": 0,
+   "source": "hysteria-ip4",
+   "link": "hysteria://5.83.129.90:54177?auth=dongtaiwang.com&upmbps=11&downmbps=55&protocol=udp#hysteria-ip4%20hysteria"
+  }
+ ]
+}
