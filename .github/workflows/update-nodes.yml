@@ -44,8 +44,10 @@ jobs:
       - name: 提交产物
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "auto: 聚合节点 (count=${{ steps.agg.outputs.count || '?' }})"
-          file_pattern: "sub/* app/data/* docs/* aggregator/__pycache__"
+          commit_message: "auto: 聚合节点"
+          file_pattern: |
+              sub/*
+              app/data/**
           skip_fetch: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
