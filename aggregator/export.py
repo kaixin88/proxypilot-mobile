@@ -471,10 +471,17 @@ def build_clash_yaml(nodes, limit=200):
     return CLASH_HEADER + body + tail
 
 
-def build_base64_sub(nodes, limit=200):
+# v2rayNG 基于 xray-core，只认下面这些；hysteria v1 它解析不了，
+# 混在订阅里只会冒出一片「不支持」的红色节点，所以单独出一份干净的订阅。
+V2RAYNG_PROTOS = ("ss", "ssr", "vmess", "vless", "trojan", "hysteria2")
+
+
+def build_base64_sub(nodes, limit=200, protos=None):
     links = []
     for n in nodes:
         if not exportable(n):
+            continue
+        if protos and (n.get("protocol") or "").lower() not in protos:
             continue
         lk = share_link(n)
         if lk:
