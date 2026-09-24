@@ -1,6 +1,5 @@
 # 告知 .gitignore：图标、构建产物等
-sub/
-app/data/
+# 注意：sub/ 与 app/data/ 由 GitHub Actions 生成并提交回仓库，不能 ignore！
 android/app/src/main/assets/
 android/.gradle/
 android/build/
