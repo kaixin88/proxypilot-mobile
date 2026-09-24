@@ -1,0 +1,100 @@
+name: 构建 Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "android/**"
+      - "app/**"
+      - ".github/workflows/build-apk.yml"
+  workflow_run:
+    workflows: ["定时聚合节点"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1) 同步 PWA 静态资源到 WebView 的 assets/
+      - name: 拷贝前端资源
+        run: |
+            mkdir -p android/app/src/main/assets
+            cp -r app/* android/app/src/main/assets/
+
+      # 2) 安装 Java 17 与 Gradle
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.7"
+
+      # 3) 安装 Android SDK（含 build-tools 34 / platform 34）
+      - name: 安装 Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          api-level: 34
+          build-tools-version: 34.0.0
+
+      # 4) 生成 debug keystore（无密钥也能产出可安装的 APK；上架商店需自备 release 密钥）
+      - name: 生成签名
+        if: env.SIGN == 'true'
+        run: |
+            keytool -genkey -v \
+              -keystore android/app/debug.keystore \
+              -storepass android -keypass android \
+              -alias androiddebugkey \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -dname "CN=ProxyPilot,O=Local,C=CN" || true
+
+      # 5) 编译
+      - name: Gradle assembleDebug
+        run: |
+            cd android && \
+            ./gradlew --no-daemon assembleDebug -Dorg.gradle.jvmargs="-Xmx2g"
+
+      # 6) 上传 APK
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ProxyPilotMobile-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      # 7) 同时发一份到 GitHub Release（直接下载不需登录）
+      - name: 推到 GitHub Release
+        if: startsWith(github.ref, 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-latest
+          name: ProxyPilot Mobile · Latest APK
+          body: |
+              最新可用 APK，由 GitHub Actions 自动构建。
+
+              - SHA256: `${{ steps.digest.outputs.sha256 }}`
+              - 大小：`${{ steps.digest.outputs.size }}`
+
+              直接下载安装；不会覆盖其他客户端；可以删了重装。
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+          overwrite: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 计算 APK 哈希
+        id: digest
+        if: always()
+        run: |
+            if [ -f android/app/build/outputs/apk/debug/app-debug.apk ]; then
+              sha256sum android/app/build/outputs/apk/debug/app-debug.apk | head -c 64 > /tmp/sha
+              echo "sha256=$(cat /tmp/sha)" >> $GITHUB_OUTPUT
+              ls -l android/app/build/outputs/apk/debug/app-debug.apk | awk '{print "size="$5}' >> $GITHUB_OUTPUT
+            else
+              echo "sha256=missing" >> $GITHUB_OUTPUT
+              echo "size=0" >> $GITHUB_OUTPUT
+            fi
