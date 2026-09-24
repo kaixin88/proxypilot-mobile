@@ -221,10 +221,19 @@ header{
 var REPO = "kaixin88/proxypilot-mobile";   // 改成自己的 用户名/仓库名
 var BRANCH = "main";
 // 三条取数据的线路，哪个通用哪个（第一条国内通常最快）
+// ⚠️ Pages 部署的是 app/ 目录，所以它的订阅路径是 /data/ 而不是 /sub/
+// fetchRel : 相对/绝对地址，只用于 App 内部拉 nodes.json
+// subBase  : 绝对地址，复制给别人粘进 v2rayNG 时必须是它
 var MIRRORS = [
-  {name:"jsDelivr", base:"https://cdn.jsdelivr.net/gh/" + REPO + "@" + BRANCH + "/sub/"},
-  {name:"GitHub Pages", base:"https://kaixin88.github.io/proxypilot-mobile/sub/"},
-  {name:"raw", base:"https://raw.githubusercontent.com/" + REPO + "/" + BRANCH + "/sub/"}
+  {name:"jsDelivr",
+   fetchRel:"https://cdn.jsdelivr.net/gh/" + REPO + "@" + BRANCH + "/sub/",
+   subBase:"https://cdn.jsdelivr.net/gh/" + REPO + "@" + BRANCH + "/sub/"},
+  {name:"GitHub Pages",
+   fetchRel:"./data/",
+   subBase:"https://kaixin88.github.io/proxypilot-mobile/data/"},
+  {name:"raw",
+   fetchRel:"https://raw.githubusercontent.com/" + REPO + "/" + BRANCH + "/sub/",
+   subBase:"https://raw.githubusercontent.com/" + REPO + "/" + BRANCH + "/sub/"}
 ];
 var LOCAL = "data/nodes.json";   // 打包进 APK 的快照，断网时用
 
@@ -280,7 +289,7 @@ function loadData(quiet){
         return Promise.resolve();
       }
       var m = MIRRORS[i++];
-      return tryFetch(m.base + "nodes.json").then(function(d){
+      return tryFetch(m.fetchRel + "nodes.json").then(function(d){
         if(!d || !d.nodes) throw new Error("bad");
         // 远端比本地新就用远端
         if(!data || !d.updated || d.updated > data.updated || d.count > (data.count||0)) { data = d; }
@@ -379,7 +388,7 @@ function renderList(){
     };
   });
 }
-function subUrl(file){ return MIRRORS[mirror].base + file; }
+function subUrl(file){ return MIRRORS[mirror].subBase + file; }
 var SUB_FILES = ["clash.yaml", "v2rayng.txt", "sub.txt"];
 function renderSubs(){
   $("#u1").textContent = subUrl(SUB_FILES[0]);
