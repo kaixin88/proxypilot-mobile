@@ -15,10 +15,33 @@
 | 📦 APK 下载（直接装） | https://github.com/kaixin88/proxypilot-mobile/releases/download/apk-latest/app-debug.apk |
 | 🗂 仓库 | https://github.com/kaixin88/proxypilot-mobile |
 | 📋 Clash / Meta 订阅 | https://cdn.jsdelivr.net/gh/kaixin88/proxypilot-mobile@main/sub/clash.yaml |
-| 📋 v2rayNG 订阅 | https://cdn.jsdelivr.net/gh/kaixin88/proxypilot-mobile@main/sub/sub.txt |
+| 📋 v2rayNG 订阅（已剔除 hysteria） | https://cdn.jsdelivr.net/gh/kaixin88/proxypilot-mobile@main/sub/v2rayng.txt |
+| 📋 NekoBox / sing-box 订阅（全协议） | https://cdn.jsdelivr.net/gh/kaixin88/proxypilot-mobile@main/sub/sub.txt |
 
 > 国内访问订阅若卡顿，把链接里的 `cdn.jsdelivr.net` 换成
 > `raw.githubusercontent.com` 或 `kaixin88.github.io` 即可，三条线路 App 里都有切换按钮。
+
+---
+
+## 只用 v2rayNG，不装本 App？完全可以
+
+订阅链接本身就是最终产物，本 App 只是「看节点 + 帮你点一下导入」的壳。
+直接用 v2rayNG 的步骤：
+
+1. 装好 v2rayNG，打开 → 左上角菜单 → **订阅设置**
+2. 右上角 **＋** → 备注随便填（比如 `ProxyPilot`）
+3. **地址(URL)** 填上面表格里的 `v2rayng.txt` 那条
+4. 右上角 ✓ 保存 → 回到首页 → 右上角 ⋮ → **更新订阅**
+5. 节点出来后点一个 → 底部 **V 按钮** 连接
+
+> ⚠️ **一定要用 `v2rayng.txt` 那条，不要用 `sub.txt`。**
+> 云端这批节点大多是 `hysteria`（v1），v2rayNG 基于 xray-core **不支持 hysteria**，
+> 用通用订阅会看到一片「不支持」的红节点。`v2rayng.txt` 已经替你筛掉了。
+> 想连 hysteria 节点请用 **Clash Meta for Android**（喂 `clash.yaml`）或
+> **NekoBox / sing-box**（喂 `sub.txt`）。
+
+想让它长期自动更新：订阅设置里打开 **自动更新**（默认每 12 小时），
+或每次手动点「更新订阅」——服务端每 3 小时重跑一次聚合。
 
 ## 怎么用
 
