@@ -9,8 +9,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="ProxyPilot"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="false"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:usesCleartextTraffic="false">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|locale"
