@@ -106,8 +106,15 @@ def main():
         write(os.path.join(args.out, "clash.yaml"), yaml_text)
 
     if args.app_data:
+        # Pages 上暴露的是 app/ 目录，所以订阅也要在 data/ 下留一份——
+        # App 的「订阅地址」卡片指向的就是这里（同一域名，避开跨站与镜像差异）。
         write(os.path.join(args.app_data, "nodes.json"),
               json.dumps(payload, ensure_ascii=False, separators=(",", ":")))
+        for fname in ("clash.yaml", "v2rayng.txt", "sub.txt"):
+            src = os.path.join(args.out, fname)
+            if os.path.exists(src):
+                with open(src, "r", encoding="utf-8") as f:
+                    write(os.path.join(args.app_data, fname), f.read())
 
     print("完成：%d 个节点，更新于 %s" % (len(usable), now))
     return 0
