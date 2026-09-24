@@ -37,12 +37,11 @@ jobs:
         with:
           gradle-version: "8.7"
 
-      # 3) 安装 Android SDK（含 build-tools 34 / platform 34）
+      # 3) 安装 Android SDK（android-actions/setup-android@v3 只支持 packages/cmdline-tools-version）
       - name: 安装 Android SDK
         uses: android-actions/setup-android@v3
         with:
-          api-level: 34
-          build-tools-version: 34.0.0
+          packages: platform-tools platforms;android-34 build-tools;34.0.0
 
       # 4) 生成 debug keystore（无密钥也能产出可安装的 APK；上架商店需自备 release 密钥）
       - name: 生成签名
