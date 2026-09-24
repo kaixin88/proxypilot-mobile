@@ -33,6 +33,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'androidx.core:core:1.13.1'
+    // 只用系统 WebView，不再拉 appcompat（避免拖入旧版 Kotlin stdlib 引发类重复）
+    implementation 'androidx.annotation:annotation:1.8.2'
 }
