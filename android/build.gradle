@@ -1,0 +1,4 @@
+// 根项目 Gradle 配置
+plugins {
+    id 'com.android.application' version '8.5.2' apply false
+}
