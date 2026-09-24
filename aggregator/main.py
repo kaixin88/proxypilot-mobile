@@ -87,9 +87,20 @@ def main():
           json.dumps(payload, ensure_ascii=False, indent=1))
     write(os.path.join(args.out, "links.txt"), "\n".join(n.get("link", "") for n in usable))
 
-    b64sub, links = export.build_base64_sub(usable, limit=args.limit)
+    # 通用订阅：全部协议（sing-box / NekoBox / SagerNet 吃得下）
+    b64sub, _ = export.build_base64_sub(usable, limit=args.limit)
     if b64sub:
         write(os.path.join(args.out, "sub.txt"), b64sub)
+
+    # v2rayNG 专用：剔掉 hysteria v1 等 xray-core 不支持的协议
+    ngsub, nglinks = export.build_base64_sub(usable, limit=args.limit,
+                                             protos=export.V2RAYNG_PROTOS)
+    if ngsub:
+        write(os.path.join(args.out, "v2rayng.txt"), ngsub)
+        print("  v2rayNG 专用订阅：%d 个节点（从 %d 个中筛出）" % (len(nglinks), len(usable)))
+    else:
+        print("  !! 本次没有 v2rayNG 能用的节点（源里大概率全是 hysteria）")
+
     yaml_text = export.build_clash_yaml(usable, limit=args.limit)
     if yaml_text:
         write(os.path.join(args.out, "clash.yaml"), yaml_text)
