@@ -21,11 +21,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1) 同步 PWA 静态资源到 WebView 的 assets/
+      # 1) 同步 PWA 静态资源到 WebView 的 assets/，并修复 gradlew 权限
       - name: 拷贝前端资源
         run: |
             mkdir -p android/app/src/main/assets
             cp -r app/* android/app/src/main/assets/
+            chmod +x android/gradlew
 
       # 2) 安装 Java 17 与 Gradle
       - uses: actions/setup-java@v4
