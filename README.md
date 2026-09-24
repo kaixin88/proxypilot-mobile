@@ -7,6 +7,19 @@
 > 这只是**节点管理与一键导入**——实际代理要靠手机上已装的客户端。
 > 走的是 `clash://` / `v2rayng://` / `sing-box://` 这些自定义 scheme。
 
+## 链接
+
+| 用途 | 地址 |
+|---|---|
+| 🌐 手机网页（PWA，加到主屏幕） | https://kaixin88.github.io/proxypilot-mobile/ |
+| 📦 APK 下载（直接装） | https://github.com/kaixin88/proxypilot-mobile/releases/download/apk-latest/app-debug.apk |
+| 🗂 仓库 | https://github.com/kaixin88/proxypilot-mobile |
+| 📋 Clash / Meta 订阅 | https://cdn.jsdelivr.net/gh/kaixin88/proxypilot-mobile@main/sub/clash.yaml |
+| 📋 v2rayNG 订阅 | https://cdn.jsdelivr.net/gh/kaixin88/proxypilot-mobile@main/sub/sub.txt |
+
+> 国内访问订阅若卡顿，把链接里的 `cdn.jsdelivr.net` 换成
+> `raw.githubusercontent.com` 或 `kaixin88.github.io` 即可，三条线路 App 里都有切换按钮。
+
 ## 怎么用
 
 ### 方式 A：浏览器（最快）
