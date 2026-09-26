@@ -1,13 +1,13 @@
 {
- "updated": "2026-09-25 23:39:47 UTC",
+ "updated": "2026-09-26 02:12:15 UTC",
  "count": 5,
  "stat": {
   "totalSources": 26,
   "fetchedSources": 26,
   "parsed": 26,
   "merged": 14,
-  "removed": 3,
-  "alive": 11
+  "removed": 5,
+  "alive": 9
  },
  "nodes": [
   {
@@ -16,7 +16,7 @@
    "protocol": "vless",
    "server": "62.210.70.194",
    "port": 37783,
-   "latency": 144,
+   "latency": 143,
    "source": "xray-ip2",
    "link": "vless://a289c660-1b12-432b-a06c-c2ae469272b0@62.210.70.194:37783?encryption=none&security=reality&type=xhttp&sni=www.yahoo.com&fp=chrome&pbk=tQeEamJmYVUUfjRLX7ETvMnPj4DrHzRhR5TI684oYgg&sid=21569dd6&path=%2FOCrp5Ajs&host=www.yahoo.com#proxy"
   },
